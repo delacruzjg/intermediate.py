@@ -220,7 +220,6 @@ def scytale_decipher(message, shift):
     num_rows = len(message) // shift
     remainder = len(message) % shift
 
-
     if remainder:
         num_rows += 1
 
@@ -230,5 +229,4 @@ def scytale_decipher(message, shift):
         row = i % shift
         decoded[row] += message[i]
 
-    
     return ''.join(decoded)
