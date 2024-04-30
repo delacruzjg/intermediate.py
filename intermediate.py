@@ -207,14 +207,20 @@ def scytale_cipher(message, shift):
     str
     the encoded message
     '''
-    if len(message) % shift != 0:
-        message += '_' * (shift - len(message) % shift)
+    while len(message) % shift != 0:
+        message += '_'
     
-    encrypted_message = ''
-    for i in range(len(message)):
-        encrypted += message[(i // shift) + (len(message) // shift) * (i % shift)]
+    encrypted_message = [''] * len(message)
+    message_length = len(message)
+    rows = message_length // shift
+
+    # Construct the encrypted message
+    for i in range(message_length):
+        new_position = (i // shift) + rows * (i % shift)
+        encrypted_message[i] = message[new_position]
     
-    return encrypted_message
+    return ''.join(encrypted_message)
+
 
 def scytale_decipher(message, shift):
     num_rows = len(message) // shift
