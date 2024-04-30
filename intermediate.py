@@ -217,27 +217,18 @@ def scytale_cipher(message, shift):
     return encrypted_message
 
 def scytale_decipher(message, shift):
-    '''Scytale De-cipher.
-    Decrypts a message that was originally encrypted with the `scytale_cipher` function above.
-
-    Parameters
-    ----------
-    message: str
-        a string of uppercase English letters and underscores (underscores represent spaces)
-    shift: int
-        a positive int that does not exceed the length of message
-
-    Returns
-    -------
-    str
-        the decoded message
-    '''
     num_rows = len(message) // shift
-    deciphered_chars = []
-    for row in range(num_rows):
-        for col in range(shift):
-            index = col * num_rows + row
-            deciphered_chars.append(message[index])
-    deciphered_message = ''.join(deciphered_chars)
-    deciphered_message = deciphered_message.rstrip('_')
-    return deciphered_message
+    remainder = len(message) % shift
+
+
+    if remainder:
+        num_rows += 1
+
+    decoded = [''] * shift
+
+    for i in range(len(message)):
+        row = i % shift
+        decoded[row] += message[i]
+
+    
+    return ''.join(decoded)
